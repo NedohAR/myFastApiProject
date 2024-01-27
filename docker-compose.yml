@@ -5,6 +5,8 @@ services:
     image: mysql:8.2.0
     environment:
       - "MYSQL_ROOT_PASSWORD=mypass123"
+    volumes:
+      - ./users.sql:/docker-entrypoint-initdb.d/users.sql
   phpmyadmin:
     container_name: my-own-phpmyadmin
     image: phpmyadmin/phpmyadmin

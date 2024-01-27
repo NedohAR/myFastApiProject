@@ -15,7 +15,7 @@ const App = () => {
   const fetchUsers = async () => {
     try {
       const response = await api.get('/get_users');
-      setUsers(response.data.user);
+      setUsers(response.data.users);
     } catch (error) {
       console.error('Error fetching users:', error.message);
     }
