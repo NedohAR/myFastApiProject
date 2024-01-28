@@ -42,7 +42,7 @@ ul {
 li {
   margin-bottom: 20px;
   padding: 20px;
-  background-color: #eee;
+  /*background-color: #eee;*/
   border-radius: 8px;
   font-size: 18px;
 }

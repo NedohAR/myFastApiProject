@@ -12,12 +12,11 @@ from starlette.responses import JSONResponse
 
 app = FastAPI()
 
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
@@ -47,9 +46,11 @@ class User(BaseModel):
     email: str
     password: str
 
+
 @app.get("/")
 def read_root():
     return {"message": "Hello"}
+
 
 @app.exception_handler(Exception)
 async def exception_handler(request: Request, exc: Exception):
@@ -71,23 +72,23 @@ async def create_user(user: User):
     return {"message": "User created successfully"}
 
 
-@app.put("/update_user/{user_id}")
-async def update_user(user_id: int, user: User):
+@app.put("/update_user/{user_name}")
+async def update_user(user_name: str, user: User):
     conn = connect()
     cursor = conn.cursor()
     query = "UPDATE users SET name=%s, email=%s, password=%s WHERE id=%s"
-    cursor.execute(query, (user.name, user.email, user.password, user_id))
+    cursor.execute(query, (user.name, user.email, user.password, user_name))
     conn.commit()
     conn.close()
     return {"message": "User updated successfully"}
 
 
-@app.delete("/delete_user/{user_id}")
-async def delete_user(user_id: int):
+@app.delete("/delete_user/{user_name}")
+async def delete_user(user_name: str):
     conn = connect()
     cursor = conn.cursor()
-    query = "DELETE FROM users WHERE id=%s"
-    cursor.execute(query, (user_id,))
+    query = "DELETE FROM users WHERE name=%s"
+    cursor.execute(query, (user_name,))
     conn.commit()
     conn.close()
     return {"message": "User deleted successfully"}

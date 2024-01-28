@@ -39,18 +39,18 @@ const App = () => {
     }
   };
 
-  const updateUser = async (userId) => {
-    try {
-      await api.put(`/update_user/${userId}`, formData);
-      fetchUsers();
-    } catch (error) {
-      console.error('Error updating user:', error.message);
-    }
-  };
+  // const updateUser = async (userName) => {
+  //   try {
+  //     await api.put(`/update_user/${userName}`, formData);
+  //     fetchUsers();
+  //   } catch (error) {
+  //     console.error('Error updating user:', error.message);
+  //   }
+  // };
 
-  const deleteUser = async (userId) => {
+  const deleteUser = async (userName) => {
     try {
-      await api.delete(`/delete_user/${userId}`);
+      await api.delete(`/delete_user/${userName}`);
       fetchUsers();
     } catch (error) {
       console.error('Error deleting user:', error.message);
@@ -60,7 +60,6 @@ const App = () => {
   return (
     <div className="App">
       <h1>User Management App</h1>
-
       <form>
         <label>Name:</label>
         <input type="text" value={name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
@@ -82,10 +81,7 @@ const App = () => {
           {users.map((user) => (
             <li key={user.id}>
               {`${user.name} - ${user.email}`}
-              <button type="button" onClick={() => updateUser(user.id)}>
-                Update
-              </button>
-              <button type="button" onClick={() => deleteUser(user.id)}>
+              <button type="button" onClick={() => deleteUser(user.name)}>
                 Delete
               </button>
             </li>
